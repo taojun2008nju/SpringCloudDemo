@@ -1,7 +1,7 @@
 project:
   application: SpringCloud
   name: SpringCloud
-  chineseName: SpringCloud工程服务提供方
+  chineseName: SpringCloud工程网关
   version:  1.0
   unpackTime: 2020/08/01
   PIC: taojun
@@ -10,11 +10,11 @@ project:
   framework: SpringBoot
 
 server:
-  port: 8081    #声明端口号
+  port: 8080    #声明端口号
 
 spring:
   application:
-    name: server-api
+    name: zuul-server
 
 eureka:
   client:
@@ -22,16 +22,20 @@ eureka:
     fetch-registry: false      #是否从eureka上获取信息，由于本案例是单机，无需从别的eureka上获取注册信息
     service-url:
       defaultZone: http://localhost:8761/eureka    #设置与eureka交互的地址，查询服务和注册服务都需要依赖这个地址，默认是：http://localhost:8761/eureka
+#  instance:
+#    prefer-ip-address: true
 
+zuul:
+  routes:
+    provider:
+      serviceId: server-api	#没有提示，自己取名称，值为服务的名称
+
+#  spring boot 升为 2.0 后，为了安全，默认 Actuator 只暴露2个端点，heath 和 info
 management:
-  endpoint:
-    health:
-      show-details: always
   endpoints:
     web:
-      base-path: /
       exposure:
-        include: info,health
-  metrics:
-    tags:
-      application: ${spring.application.name}
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

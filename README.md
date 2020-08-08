@@ -1,2 +1,2 @@
 【技术栈】
-SpringBoot、Zookeeper、Kafka、Redis、Guava
+SpringCloud基础组件
