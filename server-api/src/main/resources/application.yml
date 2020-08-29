@@ -10,7 +10,7 @@ project:
   framework: SpringBoot
 
 server:
-  port: 8081    #声明端口号
+  port: 8082    #声明端口号
 
 spring:
   application:
@@ -22,6 +22,7 @@ eureka:
     fetch-registry: false      #是否从eureka上获取信息，由于本案例是单机，无需从别的eureka上获取注册信息
     service-url:
       defaultZone: http://localhost:8761/eureka    #设置与eureka交互的地址，查询服务和注册服务都需要依赖这个地址，默认是：http://localhost:8761/eureka
+
 
 management:
   endpoint:
@@ -35,3 +36,6 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
+ribbon:
+  eureka:
+    enabled: true

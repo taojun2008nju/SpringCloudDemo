@@ -18,7 +18,7 @@
 	<modules>
 		<module>eureka</module>
 		<module>server-api</module>
-		<module>gateway</module>
+		<module>zuul</module>
 	</modules>
 
 	<properties>
@@ -51,12 +51,33 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- spring-cloud -->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
 				<version>${spring-cloud.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+
+			<!-- fastjson -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>1.2.70</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>1.16.8</version>
+			</dependency>
+
+			<!-- log4j2日志 begin -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-log4j2</artifactId>
+				<version>2.0.4.RELEASE</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

@@ -1,7 +1,7 @@
 project:
   application: SpringCloud
   name: SpringCloud
-  chineseName: SpringCloud工程网关
+  chineseName: SpringCloud工程Zuul网关
   version:  1.0
   unpackTime: 2020/08/01
   PIC: taojun
@@ -19,23 +19,33 @@ spring:
 eureka:
   client:
     register-with-eureka: true    #默认是true，将自己注册到eureka上
-    fetch-registry: false      #是否从eureka上获取信息，由于本案例是单机，无需从别的eureka上获取注册信息
+    fetch-registry: true      #是否从eureka上获取信息，zuul网关需要获取注册信息
     service-url:
       defaultZone: http://localhost:8761/eureka    #设置与eureka交互的地址，查询服务和注册服务都需要依赖这个地址，默认是：http://localhost:8761/eureka
 #  instance:
 #    prefer-ip-address: true
 
 zuul:
+#  prefix: "/zuul/"  ## 统一前缀
   routes:
-    provider:
+    server-api:
+      path: /server-api/**      #路由路径
       serviceId: server-api	#没有提示，自己取名称，值为服务的名称
+#  ignoredServices: *
+
+logging:
+  config: classpath:log/log4j2.xml
+
+#ribbon:
+#  eureka:
+#    enabled: true
 
 #  spring boot 升为 2.0 后，为了安全，默认 Actuator 只暴露2个端点，heath 和 info
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: ALWAYS
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#  endpoint:
+#    health:
+#      show-details: ALWAYS
