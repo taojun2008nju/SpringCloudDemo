@@ -85,3 +85,6 @@ management:
 ribbon:
   eureka:
     enabled: true
+
+logging:
+  config: classpath:log/log4j2.xml
