@@ -1,7 +1,9 @@
 package com.springcloud.serverapi.controller;
 
+import com.springcloud.dao.entity.TestEntity;
+import com.springcloud.dao.mapper.TestEntityMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,5 +29,16 @@ public class ApiController {
     @ResponseBody
     public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
         return "Hello " + name;
+    }
+
+
+    @Autowired
+    private TestEntityMapper testEntityMapper;
+
+    @RequestMapping("/testDb")
+    @ResponseBody
+    public String testDb() {
+        TestEntity testEntity = testEntityMapper.selectById(1L);
+        return testEntity.getName();
     }
 }

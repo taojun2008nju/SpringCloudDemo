@@ -15,6 +15,52 @@ server:
 spring:
   application:
     name: server-api
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/ceshi2?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+    filters: log4j,wall,mergeStat
+    druid:
+      initial-size: 20
+      max-active: 500
+      min-idle: 200
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      validation-query: SELECT 1 FROM dual
+      test-on-borrow: true
+      test-on-return: false
+      test-while-idle: false
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      filters: stat
+      min-evictable-idle-time-millis: 300000
+      max-pool-prepared-statement-per-connection-size: 20
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      use-global-data-source-stat: true
+      web-stat-filter:
+        exclusions: /druid/*,*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico
+        url-pattern: /*
+        enabled: true
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: druid
+        login-password: druid
+        #IP白名单 (没有配置或者为空，则允许所有访问)
+        allow:
+        #IP黑名单 (存在共同时，deny优先于allow)
+        deny:
+        resetEnable: false
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*.xml
+  global-config:
+    id-type: 0
+    db-column-underline: false
+    refresh-mapper: true
 
 eureka:
   client:
