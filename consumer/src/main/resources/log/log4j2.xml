@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration monitorInterval="60" packages="org.ysten.gdog.log4j2" status="info">
+    <Properties>
+        <Property name="LOG_PATH">/data/logs</Property>
+        <Property name="APP_NAME">zuul</Property>
+        <Property name="PATTERN_LAYOUT">%d [%X{traceId}] [%t] %level (%F %M %L) - %msg%n</Property>
+        <Property name="LOG_PATTERN_CONSOLE">%d [%t] %level (%F %M %L) %X{logid} -%msg%n</Property>
+        <Property name="SERVER_PORT">default</Property>
+        <!--日志文件最大容量，超过最大容量后日志文件分割-->
+        <Property name="MAX_FILE_SIZE">100MB</Property>
+        <!--分割日志的最大次数-->
+        <Property name="I_MAX">1000</Property>
+    </Properties>
+
+    <appenders>
+        <console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+        </console>
+        <RollingFile fileName="${LOG_PATH}/${APP_NAME}_debug.log"
+                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/${APP_NAME}_debug_%d{yyyy-MM-dd}_%i.log"
+                     name="RollingFileDebug">
+            <Filters>
+                <!--  error > warn > info > debug-->
+                <!-- debug情况下，debug日志中保存 debug & warn & error & info级别的日志-->
+                <ThresholdFilter level="FATAL" onMatch="DENY" onMismatch="ACCEPT"/>
+            </Filters>
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${I_MAX}"/>
+        </RollingFile>
+        <RollingFile fileName="${LOG_PATH}/${APP_NAME}_info.log"
+                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/${APP_NAME}_info_%d{yyyy-MM-dd}_%i.log"
+                     name="RollingFileInfo">
+            <Filters>
+                <!-- info 情况下，info日志中只保存info级别日志> -->
+                <ThresholdFilter level="INFO"/>
+                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${I_MAX}"/>
+        </RollingFile>
+
+        <RollingFile fileName="${LOG_PATH}/${APP_NAME}_warn.log"
+                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/${APP_NAME}_warn_%d{yyyy-MM-dd}_%i.log"
+                     name="RollingFileWarn">
+            <Filters>
+                <!-- warn 情况下，info日志中只保存warn级别日志> -->
+                <ThresholdFilter level="WARN"/>
+                <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${I_MAX}"/>
+        </RollingFile>
+
+        <RollingFile fileName="${LOG_PATH}/${APP_NAME}_error.log"
+                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/${APP_NAME}_error_%d{yyyy-MM-dd}_%i.log"
+                     name="RollingFileError">
+            <Filters>
+                <!--  error模式只打印error级别的日志 -->
+                <ThresholdFilter level="ERROR"/>
+            </Filters>
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${I_MAX}"/>
+        </RollingFile>
+        <!-- 输出鉴权日志 -->
+        <RollingFile fileName="${LOG_PATH}/${APP_NAME}_inquiry.log"
+                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/${APP_NAME}_inquiry_%d{yyyy-MM-dd}_%i.log"
+                     name="RollingFileInquiry">
+            <Filters>
+                <ThresholdFilter level="INFO" onMatch="NEUTRAL" onMismatch="DENY"/>
+                <RegexFilter regex=".*save_inquiry_log.*" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${I_MAX}"/>
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+        <AsyncLogger level="INFO" name="org.springframework"/>
+        <!--<AsyncLogger level="DEBUG" name="org.apache.dubbo"/>-->
+        <AsyncLogger  name="org.mybatis" level="INFO"></AsyncLogger>
+        <asyncRoot additivity="false" includeLocation="true" level="info">
+            <!--控制台日志，生产环境关闭-->
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFileDebug"/>
+            <appender-ref ref="RollingFileInfo"/>
+            <appender-ref ref="RollingFileWarn"/>
+            <appender-ref ref="RollingFileError"/>
+        </asyncRoot>
+    </loggers>
+</configuration>

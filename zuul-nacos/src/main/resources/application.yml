@@ -1,0 +1,46 @@
+project:
+  application: SpringCloud
+  name: SpringCloud
+  chineseName: SpringCloud工程Nacos Zuul网关注册中心
+  version:  1.0
+  unpackTime: 2020/08/01
+  PIC: taojun
+  versionControlNo: 1.0
+  versionControlPath:
+  framework: SpringBoot
+
+server:
+  port: 8085    #声明端口号
+
+spring:
+  application:
+    name: zuul-nacos-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+zuul:
+#  prefix: "/zuul/"  ## 统一前缀
+  routes:
+    server-api:
+      path: /server-api/**      #路由路径
+      serviceId: server-api	#没有提示，自己取名称，值为服务的名称
+#  ignoredServices: *
+
+logging:
+  config: classpath:log/log4j2.xml
+
+#ribbon:
+#  eureka:
+#    enabled: true
+
+#  spring boot 升为 2.0 后，为了安全，默认 Actuator 只暴露2个端点，heath 和 info
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#  endpoint:
+#    health:
+#      show-details: ALWAYS

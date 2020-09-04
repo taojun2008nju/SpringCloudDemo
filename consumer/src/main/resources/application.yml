@@ -1,0 +1,24 @@
+project:
+  application: SpringCloud
+  name: SpringCloud
+  chineseName: SpringCloud工程Consumer
+  version:  1.0
+  unpackTime: 2020/08/01
+  PIC: taojun
+  versionControlNo: 1.0
+  versionControlPath:
+  framework: SpringBoot
+
+server:
+  port: 8087    #声明端口号
+
+spring:
+  application:
+    name: nacos-consumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+#logging:
+#  config: classpath:log/log4j2.xml

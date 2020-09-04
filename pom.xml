@@ -19,6 +19,9 @@
 		<module>eureka</module>
 		<module>server-api</module>
 		<module>zuul</module>
+		<module>dao</module>
+		<module>zuul-nacos</module>
+		<module>consumer</module>
 	</modules>
 
 	<properties>
