@@ -2,8 +2,8 @@ package com.springcloud.serverapi.controller;
 
 import com.springcloud.dao.entity.TestEntity;
 import com.springcloud.dao.mapper.TestEntityMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
-@EnableFeignClients
+//@EnableFeignClients
+@Slf4j
 public class ApiController {
 
     @RequestMapping(value = {"/", "/index"})
@@ -38,6 +39,7 @@ public class ApiController {
     @RequestMapping("/testDb")
     @ResponseBody
     public String testDb() {
+        log.info("Method:testDb");
         TestEntity testEntity = testEntityMapper.selectById(1L);
         return testEntity.getName();
     }

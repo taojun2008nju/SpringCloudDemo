@@ -57,6 +57,19 @@
 			<version>1.4.7.RELEASE</version>
 		</dependency>
 
+		<!-- log4j2日志 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+
+		<!-- log4j2异步日志需要加载disruptor-3.0.0.jar或者更高的版本 -->
+		<dependency>
+			<groupId>com.lmax</groupId>
+			<artifactId>disruptor</artifactId>
+			<version>3.4.2</version>
+		</dependency>
+
 		<!-- actuator监控信息完善 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -67,13 +80,6 @@
 			<groupId>com.springcloud</groupId>
 			<artifactId>dao</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
-		<!-- 日志框架依赖 -->
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
 		</dependency>
 	</dependencies>
 
