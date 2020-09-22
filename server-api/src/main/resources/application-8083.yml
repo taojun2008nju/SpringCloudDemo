@@ -1,0 +1,90 @@
+project:
+  application: SpringCloud
+  name: SpringCloud
+  chineseName: SpringCloud工程服务提供方
+  version:  1.0
+  unpackTime: 2020/08/01
+  PIC: taojun
+  versionControlNo: 1.0
+  versionControlPath:
+  framework: SpringBoot
+
+server:
+  port: 8083    #声明端口号
+
+spring:
+  application:
+    name: server-api
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/ceshi2?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+    filters: log4j,wall,mergeStat
+    druid:
+      initial-size: 20
+      max-active: 500
+      min-idle: 200
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      validation-query: SELECT 1 FROM dual
+      test-on-borrow: true
+      test-on-return: false
+      test-while-idle: false
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      filters: stat
+      min-evictable-idle-time-millis: 300000
+      max-pool-prepared-statement-per-connection-size: 20
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      use-global-data-source-stat: true
+      web-stat-filter:
+        exclusions: /druid/*,*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico
+        url-pattern: /*
+        enabled: true
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: druid
+        login-password: druid
+        #IP白名单 (没有配置或者为空，则允许所有访问)
+        allow:
+        #IP黑名单 (存在共同时，deny优先于allow)
+        deny:
+        resetEnable: false
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*.xml
+  global-config:
+    id-type: 0
+    db-column-underline: false
+    refresh-mapper: true
+
+eureka:
+  client:
+    register-with-eureka: true    #默认是true，将自己注册到eureka上
+    fetch-registry: false      #是否从eureka上获取信息，由于本案例是单机，无需从别的eureka上获取注册信息
+    service-url:
+      defaultZone: http://localhost:8761/eureka    #设置与eureka交互的地址，查询服务和注册服务都需要依赖这个地址，默认是：http://localhost:8761/eureka
+
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: info,health
+  metrics:
+    tags:
+      application: ${spring.application.name}
+ribbon:
+  eureka:
+    enabled: true
+
+logging:
+  config: classpath:log/log4j2.xml

@@ -20,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 public class ApiController {
 
     @Autowired
+//    @LoadBalanced
     private RestTemplate restTemplate;
 
     @RequestMapping(value = {"/", "/index"})
@@ -38,5 +39,10 @@ public class ApiController {
     @GetMapping("/consumer")
     public String test1() {
         return restTemplate.getForObject("http://zuul-nacos-server/api/helloNacos",String.class);
+    }
+
+    @GetMapping("/consumer2")
+    public String test2() {
+        return restTemplate.getForObject("http://server-api/api/testDb",String.class);
     }
 }

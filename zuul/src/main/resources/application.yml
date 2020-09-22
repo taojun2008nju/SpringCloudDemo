@@ -26,11 +26,13 @@ eureka:
 #    prefer-ip-address: true
 
 zuul:
-#  prefix: "/zuul/"  ## 统一前缀
+  prefix: /test  # 统一前缀
+  ignoredPatterns: /**/admin/**   #忽略某些路径
   routes:
     server-api:
-      path: /server-api/**      #路由路径
+      path: /test-server/**      #路由路径
       serviceId: server-api	#没有提示，自己取名称，值为服务的名称
+      strip-prefix: true     #是否将这个代理前缀去掉
 #  ignoredServices: *
 
 logging:
