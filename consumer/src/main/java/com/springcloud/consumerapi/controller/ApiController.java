@@ -1,10 +1,10 @@
 package com.springcloud.consumerapi.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +43,21 @@ public class ApiController {
 
     @GetMapping("/consumer2")
     public String test2() {
+        return restTemplate.getForObject("http://server-api/api/testDb",String.class);
+    }
+
+    /**
+     * 熔断之后执行的方法
+     * @return
+     */
+    public String testFallback(){
+        return "熔断--服务正忙，请求稍后再试！";
+    }
+
+    @HystrixCommand(fallbackMethod = "testFallback")
+    @RequestMapping(value = "/testHystrix",method = RequestMethod.GET)
+    public String testHystrix() {
+        System.out.println("Method:testHystrix");
         return restTemplate.getForObject("http://server-api/api/testDb",String.class);
     }
 }

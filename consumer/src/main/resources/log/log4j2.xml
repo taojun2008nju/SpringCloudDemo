@@ -95,10 +95,10 @@
     </appenders>
 
     <loggers>
-        <AsyncLogger level="INFO" name="org.springframework"/>
+        <AsyncLogger level="DEBUG" name="org.springframework"/>
         <!--<AsyncLogger level="DEBUG" name="org.apache.dubbo"/>-->
-        <AsyncLogger  name="org.mybatis" level="INFO"></AsyncLogger>
-        <asyncRoot additivity="false" includeLocation="true" level="info">
+        <AsyncLogger  name="org.mybatis" level="DEBUG"></AsyncLogger>
+        <asyncRoot additivity="false" includeLocation="true" level="debug">
             <!--控制台日志，生产环境关闭-->
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFileDebug"/>
