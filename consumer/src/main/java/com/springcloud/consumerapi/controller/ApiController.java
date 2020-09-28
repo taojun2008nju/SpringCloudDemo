@@ -1,6 +1,8 @@
 package com.springcloud.consumerapi.controller;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import com.springcloud.consumerapi.feign.ServerApiFeignClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,7 +58,20 @@ public class ApiController {
         return "熔断--服务正忙，请求稍后再试！";
     }
 
-    @HystrixCommand(fallbackMethod = "testFallback", ignoreExceptions = NullPointerException.class)
+    @HystrixCommand(fallbackMethod = "testFallback", commandProperties = {
+        @HystrixProperty(name = "execution.isolation.strategy", value = "THREAD"),
+        @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value= "1000"),
+        @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),
+        @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "50")
+        },
+        threadPoolProperties = {
+            @HystrixProperty(name = "coreSize", value = "1"),
+            @HystrixProperty(name = "maxQueueSize", value = "10"),
+            @HystrixProperty(name = "keepAliveTimeMinutes", value = "1000"),
+            @HystrixProperty(name = "queueSizeRejectionThreshold", value = "8"),
+            @HystrixProperty(name = "metrics.rollingStats.numBuckets", value = "12"),
+            @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "1500")
+        }, ignoreExceptions = NullPointerException.class)
     @RequestMapping(value = "/testHystrix",method = RequestMethod.GET)
     public String testHystrix(String id) {
         System.out.println("Method:testHystrix");
@@ -65,5 +80,13 @@ public class ApiController {
         } else {
             return restTemplate.getForObject("http://server-api/api/testDb",String.class);
         }
+    }
+
+    @Autowired
+    private ServerApiFeignClient serverApiFeignClient;
+
+    @RequestMapping(value = "/feign/testDb", method = RequestMethod.GET)
+    public String findById(String id) {
+        return this.serverApiFeignClient.testDb(id);
     }
 }
