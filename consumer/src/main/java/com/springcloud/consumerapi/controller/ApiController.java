@@ -1,6 +1,7 @@
 package com.springcloud.consumerapi.controller;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @RestController
 @RequestMapping("/api")
+@Slf4j
 public class ApiController {
 
     @Autowired
@@ -50,14 +52,18 @@ public class ApiController {
      * 熔断之后执行的方法
      * @return
      */
-    public String testFallback(){
+    public String testFallback(String id){
         return "熔断--服务正忙，请求稍后再试！";
     }
 
-    @HystrixCommand(fallbackMethod = "testFallback")
+    @HystrixCommand(fallbackMethod = "testFallback", ignoreExceptions = NullPointerException.class)
     @RequestMapping(value = "/testHystrix",method = RequestMethod.GET)
-    public String testHystrix() {
+    public String testHystrix(String id) {
         System.out.println("Method:testHystrix");
-        return restTemplate.getForObject("http://server-api/api/testDb",String.class);
+        if (id.equalsIgnoreCase("1")) {
+            throw new NullPointerException();
+        } else {
+            return restTemplate.getForObject("http://server-api/api/testDb",String.class);
+        }
     }
 }
