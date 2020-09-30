@@ -54,6 +54,40 @@ spring:
         #IP黑名单 (存在共同时，deny优先于allow)
         deny:
         resetEnable: false
+  redis:
+    # redis数据库索引（默认为0），我们使用索引为3的数据库，避免和其他数据库冲突
+    database: 3
+    # redis服务器地址（默认为localhost）
+    host: 127.0.0.1
+    # redis端口（默认为6379）
+    port: 6379
+    # redis访问密码（默认为空）
+    password:
+    # redis连接超时时间（单位为毫秒）
+    timeout: 1000
+    # redis连接池配置
+    lettuce:
+      pool:
+        #连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        #连接池中的最大空闲连接
+        max-idle: 8
+        #连接池中的最小空闲连接
+        min-idle: 0
+        # true时连接池不生效, false时连接池生效, lettuce客户端不需要连接池，对性能没有提高，除非用到事务相关的特性再考虑设置连接池
+        share-native-connection: true
+#    jedis:
+#      pool:
+#        # 最大可用连接数（默认为8，负数表示无限）
+#        max-active: 8
+#        # 最大空闲连接数（默认为8，负数表示无限）
+#        max-idle: 8
+#        # 最小空闲连接数（默认为0，该值只有为正数才有作用）
+#        min-idle: 0
+#        # 从连接池中获取连接最大等待时间（默认为-1，单位为毫秒，负数表示无限）
+#        max-wait: -1
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*.xml
@@ -68,7 +102,6 @@ eureka:
     fetch-registry: false      #是否从eureka上获取信息，由于本案例是单机，无需从别的eureka上获取注册信息
     service-url:
       defaultZone: http://localhost:8761/eureka    #设置与eureka交互的地址，查询服务和注册服务都需要依赖这个地址，默认是：http://localhost:8761/eureka
-
 
 management:
   endpoint:

@@ -1,7 +1,7 @@
 package com.springcloud.serverapi.controller;
 
 import com.springcloud.dao.entity.TestEntity;
-import com.springcloud.dao.mapper.TestEntityMapper;
+import com.springcloud.serverapi.service.IApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,13 +34,13 @@ public class ApiController {
 
 
     @Autowired
-    private TestEntityMapper testEntityMapper;
+    private IApiService apiService;
 
     @RequestMapping("/testDb")
     @ResponseBody
     public String testDb() {
         log.info("Method:testDb");
-        TestEntity testEntity = testEntityMapper.selectById(1L);
+        TestEntity testEntity = apiService.selectById(1L);
         return testEntity.getName();
     }
 }
