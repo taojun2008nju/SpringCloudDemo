@@ -1,5 +1,6 @@
 package com.springcloud.serverapi.controller;
 
+import com.springcloud.common.common.CommonResult;
 import com.springcloud.dao.entity.TestEntity;
 import com.springcloud.serverapi.service.IApiService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
-//@EnableFeignClients
 @Slf4j
 public class ApiController {
+
+    @Autowired
+    private IApiService apiService;
 
     @RequestMapping(value = {"/", "/index"})
     @ResponseBody
@@ -32,15 +35,12 @@ public class ApiController {
         return "Hello " + name;
     }
 
-
-    @Autowired
-    private IApiService apiService;
-
     @RequestMapping("/testDb")
     @ResponseBody
-    public String testDb() {
-        log.info("Method:testDb");
-        TestEntity testEntity = apiService.selectById(1L);
-        return testEntity.getName();
+    public CommonResult testDb(@RequestParam(name = "id", defaultValue = "1") long id) {
+        log.info("Method:testDb id:{}", id);
+        TestEntity testEntity = apiService.selectById(id);
+        CommonResult<TestEntity> commonResult = new CommonResult("0", "success", testEntity);
+        return commonResult;
     }
 }

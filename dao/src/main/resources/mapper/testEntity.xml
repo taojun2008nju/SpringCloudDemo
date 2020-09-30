@@ -17,6 +17,7 @@
         select
         id, name
         from test_table
+        where id = #{id}
         limit 1
     </select>
 </mapper>
