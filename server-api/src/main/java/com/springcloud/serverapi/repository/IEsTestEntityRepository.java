@@ -1,7 +1,6 @@
 package com.springcloud.serverapi.repository;
 
 import com.springcloud.dao.entity.EsTestEntity;
-import java.util.List;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
@@ -11,5 +10,4 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  */
 public interface IEsTestEntityRepository extends ElasticsearchRepository<EsTestEntity, String> {
 
-    List<EsTestEntity> findByMessage(String message);
 }
