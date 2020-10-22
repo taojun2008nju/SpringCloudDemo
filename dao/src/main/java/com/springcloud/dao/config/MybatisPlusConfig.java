@@ -1,4 +1,4 @@
-package com.springcloud.serverapi.config;
+package com.springcloud.dao.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;

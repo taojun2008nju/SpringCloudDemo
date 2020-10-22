@@ -88,6 +88,13 @@ spring:
 #        min-idle: 0
 #        # 从连接池中获取连接最大等待时间（默认为-1，单位为毫秒，负数表示无限）
 #        max-wait: -1
+  #es配置
+  data:
+    elasticsearch:
+      cluster-name: esCluster
+      cluster-nodes: 127.0.0.1:9300
+#      cluster-name: myes
+#      cluster-nodes: hadoop137:9300,hadoop138:9300,hadoop139:9300
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*.xml
