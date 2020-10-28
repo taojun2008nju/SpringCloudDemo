@@ -15,6 +15,8 @@ server:
 spring:
   application:
     name: server-api
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/ceshi2?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=UTC
     username: root
@@ -91,10 +93,18 @@ spring:
   #es配置
   data:
     elasticsearch:
-      cluster-name: esCluster
+      cluster-name: elasticsearch
       cluster-nodes: 127.0.0.1:9300
 #      cluster-name: myes
 #      cluster-nodes: hadoop137:9300,hadoop138:9300,hadoop139:9300
+
+elasticsearch:
+  ip: 127.0.0.1
+  tcpPort: 9300
+  httpPort: 9200
+  cluster:
+    name: elasticsearch
+  pool: 5
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*.xml
