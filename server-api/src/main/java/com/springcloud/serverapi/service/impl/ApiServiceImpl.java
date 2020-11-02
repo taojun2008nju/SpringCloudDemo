@@ -1,7 +1,7 @@
 package com.springcloud.serverapi.service.impl;
 
 import com.springcloud.dao.entity.TestEntity;
-import com.springcloud.serverapi.repository.ITestEntityRepository;
+import com.springcloud.dao.repository.ITestEntityRepository;
 import com.springcloud.serverapi.service.IApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

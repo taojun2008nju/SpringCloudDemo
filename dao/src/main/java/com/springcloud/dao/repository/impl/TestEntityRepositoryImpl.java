@@ -1,8 +1,8 @@
-package com.springcloud.serverapi.repository.impl;
+package com.springcloud.dao.repository.impl;
 
 import com.springcloud.dao.entity.TestEntity;
 import com.springcloud.dao.mapper.TestEntityMapper;
-import com.springcloud.serverapi.repository.ITestEntityRepository;
+import com.springcloud.dao.repository.ITestEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;

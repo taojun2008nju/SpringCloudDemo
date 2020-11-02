@@ -1,4 +1,4 @@
-package com.springcloud.serverapi.repository;
+package com.springcloud.dao.repository;
 
 import com.springcloud.dao.entity.TestEntity;
 import org.apache.ibatis.annotations.Param;

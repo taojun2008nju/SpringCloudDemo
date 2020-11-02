@@ -1,12 +1,12 @@
 package com.springcloud.serverapi.controller;
 
 import com.springcloud.common.common.CommonResult;
-import com.springcloud.dao.entity.EsLogEntity;
-import com.springcloud.dao.entity.EsOrderEntity;
-import com.springcloud.dao.entity.EsTestEntity;
+import com.springcloud.dao.entity.es.EsLogEntity;
+import com.springcloud.dao.entity.es.EsOrderEntity;
+import com.springcloud.dao.entity.es.EsTestEntity;
 import com.springcloud.dao.entity.TestEntity;
-import com.springcloud.serverapi.repository.IEsLogEntityRepository;
-import com.springcloud.serverapi.repository.IEsTestEntityRepository;
+import com.springcloud.dao.repository.es.IEsLogEntityRepository;
+import com.springcloud.dao.repository.es.IEsTestEntityRepository;
 import com.springcloud.serverapi.service.IEsTestService;
 import com.springcloud.serverapi.util.ElasticsearchTransportClientUtil;
 import java.util.ArrayList;

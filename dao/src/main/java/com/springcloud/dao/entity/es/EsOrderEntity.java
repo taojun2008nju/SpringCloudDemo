@@ -1,4 +1,4 @@
-package com.springcloud.dao.entity;
+package com.springcloud.dao.entity.es;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;

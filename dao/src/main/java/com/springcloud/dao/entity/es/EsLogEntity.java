@@ -1,4 +1,4 @@
-package com.springcloud.dao.entity;
+package com.springcloud.dao.entity.es;
 
 import java.io.Serializable;
 import lombok.Data;

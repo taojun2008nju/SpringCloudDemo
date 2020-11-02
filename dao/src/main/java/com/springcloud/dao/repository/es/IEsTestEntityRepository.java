@@ -1,6 +1,6 @@
-package com.springcloud.serverapi.repository;
+package com.springcloud.dao.repository.es;
 
-import com.springcloud.dao.entity.EsTestEntity;
+import com.springcloud.dao.entity.es.EsTestEntity;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
