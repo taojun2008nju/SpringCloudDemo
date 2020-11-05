@@ -11,8 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @description TODO
  */
 @Data
-@Document(collation = "test")
-public class MongoDbTestEntitiy implements Serializable {
+@Document(collection = "test")
+public class MongoDbTestEntity implements Serializable {
 
     @Id
     private Long id;

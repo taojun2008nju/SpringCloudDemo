@@ -1,6 +1,6 @@
 package com.springcloud.dao.repository.mongo.impl;
 
-import com.springcloud.dao.entity.mongo.MongoDbTestEntitiy;
+import com.springcloud.dao.entity.mongo.MongoDbTestEntity;
 import com.springcloud.dao.repository.mongo.IMongoDbTestRepository;
 import javax.annotation.Resource;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -21,17 +21,19 @@ public class MongoDbTestRepositoryImpl implements IMongoDbTestRepository {
     private MongoTemplate mongoTemplate;
 
     @Override
-    public void saveDemo(MongoDbTestEntitiy demoEntity) {
+    public void saveMongoDbEntity(MongoDbTestEntity demoEntity) {
         mongoTemplate.save(demoEntity);
     }
 
     @Override
-    public void removeDemo(Long id) {
-        mongoTemplate.remove(id);
+    public void removeMongoDbEntity(Long id) {
+        MongoDbTestEntity demoEntity = new MongoDbTestEntity();
+        demoEntity.setId(id);
+        mongoTemplate.remove(demoEntity);
     }
 
     @Override
-    public void updateDemo(MongoDbTestEntitiy demoEntity) {
+    public void updateMongoDbEntity(MongoDbTestEntity demoEntity) {
         Query query = new Query(Criteria.where("id").is(demoEntity.getId()));
 
         Update update = new Update();
@@ -40,13 +42,13 @@ public class MongoDbTestRepositoryImpl implements IMongoDbTestRepository {
         update.set("by", demoEntity.getBy());
         update.set("url", demoEntity.getUrl());
 
-        mongoTemplate.updateFirst(query, update, MongoDbTestEntitiy.class);
+        mongoTemplate.updateFirst(query, update, MongoDbTestEntity.class);
     }
 
     @Override
-    public MongoDbTestEntitiy findDemoById(Long id) {
+    public MongoDbTestEntity findMongoDbEntityById(Long id) {
         Query query = new Query(Criteria.where("id").is(id));
-        MongoDbTestEntitiy demoEntity = mongoTemplate.findOne(query, MongoDbTestEntitiy.class);
+        MongoDbTestEntity demoEntity = mongoTemplate.findOne(query, MongoDbTestEntity.class);
         return demoEntity;
     }
 }

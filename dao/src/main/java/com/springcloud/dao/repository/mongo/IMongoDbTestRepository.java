@@ -1,6 +1,6 @@
 package com.springcloud.dao.repository.mongo;
 
-import com.springcloud.dao.entity.mongo.MongoDbTestEntitiy;
+import com.springcloud.dao.entity.mongo.MongoDbTestEntity;
 
 /**
  * @author Administrator
@@ -9,11 +9,11 @@ import com.springcloud.dao.entity.mongo.MongoDbTestEntitiy;
  */
 public interface IMongoDbTestRepository {
 
-    void saveDemo(MongoDbTestEntitiy demoEntity);
+    void saveMongoDbEntity(MongoDbTestEntity demoEntity);
 
-    void removeDemo(Long id);
+    void removeMongoDbEntity(Long id);
 
-    void updateDemo(MongoDbTestEntitiy demoEntity);
+    void updateMongoDbEntity(MongoDbTestEntity demoEntity);
 
-    MongoDbTestEntitiy findDemoById(Long id);
+    MongoDbTestEntity findMongoDbEntityById(Long id);
 }
