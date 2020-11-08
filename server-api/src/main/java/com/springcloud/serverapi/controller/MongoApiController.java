@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.time.LocalDateTime;
 
 /**
  * @author Administrator
@@ -25,6 +26,9 @@ public class MongoApiController {
 
     @RequestMapping("/saveMongoDbEntity")
     public CommonResult saveMongoDbEntity(@RequestBody MongoDbTestEntity demoEntity) {
+        if (demoEntity.getCreateDate() == null) {
+            demoEntity.setCreateDate(LocalDateTime.now());
+        }
         mongoDbTestService.saveMongoDbEntity(demoEntity);
         CommonResult commonResult = new CommonResult("200", "更新成功", null);
         return commonResult;

@@ -38,9 +38,7 @@ public class MongoDbTestRepositoryImpl implements IMongoDbTestRepository {
 
         Update update = new Update();
         update.set("title", demoEntity.getTitle());
-        update.set("description", demoEntity.getDescription());
-        update.set("by", demoEntity.getBy());
-        update.set("url", demoEntity.getUrl());
+        update.set("content", demoEntity.getMongoContent());
 
         mongoTemplate.updateFirst(query, update, MongoDbTestEntity.class);
     }

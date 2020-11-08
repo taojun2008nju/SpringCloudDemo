@@ -1,9 +1,13 @@
 package com.springcloud.dao.entity.mongo;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author Administrator
@@ -15,14 +19,30 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class MongoDbTestEntity implements Serializable {
 
     @Id
+    @Field(value = "id")
     private Long id;
 
+    @Field(value = "title")
     private String title;
 
-    private String description;
+    @Field(value = "content")
+    private MongoContent mongoContent;
 
-    private String by;
+    @Field(value = "create_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:SS")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createDate;
 
-    private String url;
+    @Data
+    public class MongoContent implements Serializable {
 
+        @Field(value = "content")
+        private String content;
+
+        @Field(value = "description")
+        private String description;
+
+        @Field(value = "author")
+        private String author;
+    }
 }
