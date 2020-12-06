@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 /**
  * @author Administrator
  * @date 2020/9/30 15:28:00
- * @description TODO
+ * @description 通用返回对象
  */
 @Data
 @NoArgsConstructor

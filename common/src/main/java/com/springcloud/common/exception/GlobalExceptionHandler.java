@@ -1,5 +1,6 @@
 package com.springcloud.common.exception;
 
+import com.springcloud.common.common.CommonException;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +20,20 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(Exception.class)
     public Map customException(Exception e) {
-        log.error("Exception: ", e);
-        Map map = new HashMap();
-        map.put("code", "400");
-        map.put("message", "error");
-        map.put("data", null);
-        return map;
+        if (e instanceof CommonException) {
+            log.error("Exception: ", e);
+            Map map = new HashMap();
+            map.put("code", ((CommonException) e).getCode());
+            map.put("message", ((CommonException) e).getMessage());
+            map.put("data", null);
+            return map;
+        } else {
+            log.error("Exception: ", e);
+            Map map = new HashMap();
+            map.put("code", "400");
+            map.put("message", "error");
+            map.put("data", null);
+            return map;
+        }
     }
 }
