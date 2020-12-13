@@ -2,10 +2,13 @@ package com.springcloud.serverapi.controller;
 
 import com.springcloud.common.common.CommonException;
 import com.springcloud.common.common.CommonResult;
+import com.springcloud.serverapi.security.LoginUser;
+import com.springcloud.serverapi.util.JwtUtils;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -26,6 +29,9 @@ public class UserController {
     @Resource
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private JwtUtils jwtUtils;
+
     @RequestMapping(value = "/login")
     @ResponseBody
     public CommonResult login(String username, String password) {
@@ -43,8 +49,9 @@ public class UserController {
                 throw new CommonException("401", "login error");
             }
         }
-        authentication.getPrincipal();
-        return new CommonResult("0", "login success", null);
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        loginUser.setPassword(password);
+        return new CommonResult("0", "login success", jwtUtils.createToken(loginUser));
     }
 
     /**

@@ -1,11 +1,13 @@
 package com.springcloud.serverapi.filter;
 
 import com.springcloud.serverapi.security.LoginUser;
+import com.springcloud.serverapi.util.JwtUtils;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -20,12 +22,29 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 public class AuthenticationTokenFilter extends OncePerRequestFilter {
 
+    @Autowired
+    private JwtUtils jwtUtils;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        LoginUser loginUser = new LoginUser();
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null);
-        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        LoginUser loginUser = jwtUtils.getLoginUser(request);
+        if (null != loginUser) {
+            jwtUtils.verifyToken(loginUser);
+            // TODO 此处必须设置Http Head username参数值，具体原因不详，待研究
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword());
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        }
+
+        /*String url = request.getRequestURI();
+        if (!url.equalsIgnoreCase("/user/login")) {
+            jwtUtils.verifyToken(loginUser);
+            String username = request.getHeader("username");
+            String password = request.getHeader("password");
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        }*/
         chain.doFilter(request, response);
     }
 }

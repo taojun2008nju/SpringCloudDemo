@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.filter.CorsFilter;
 
 /**
@@ -101,12 +102,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/*.html",
                         "/**/*.html",
                         "/**/*.css",
-                        "/**/*.js"
+                        "/**/*.js",
+                        "/api/**"
                 ).permitAll()
                 .antMatchers("/api/**").anonymous()
                 .antMatchers("/es/**").anonymous()
                 .antMatchers("/mongo/**").anonymous()
                 .antMatchers("/druid/**").anonymous()
+                .antMatchers("/").anonymous()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated()
                 .and()
@@ -116,7 +119,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         // 添加CORS filter
         httpSecurity.addFilterBefore(corsFilter, AuthenticationTokenFilter.class);
-//        httpSecurity.addFilterBefore(corsFilter, LogoutFilter.class);
+        httpSecurity.addFilterBefore(corsFilter, LogoutFilter.class);
     }
 
     

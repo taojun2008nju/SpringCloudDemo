@@ -27,6 +27,7 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,7 +39,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ElasticsearchTransportClientUtil {
 
-    @Autowired
+    @Autowired(required = false)
     private TransportClient transportClient;
 
     private static TransportClient client;

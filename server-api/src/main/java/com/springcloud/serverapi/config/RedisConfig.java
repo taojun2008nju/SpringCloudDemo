@@ -28,8 +28,8 @@ public class RedisConfig extends CachingConfigurerSupport {
     private int port;
     @Value("${spring.redis.timeout}")
     private int timeout;
-    @Value("${spring.redis.password}")
-    private String password;
+//    @Value("${spring.redis.password}")
+//    private String password;
     @Value("${spring.redis.lettuce.pool.max-active}")
     private int maxActive;
     @Value("${spring.redis.lettuce.pool.max-wait}")
