@@ -30,8 +30,8 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         LoginUser loginUser = jwtUtils.getLoginUser(request);
         if (null != loginUser) {
             jwtUtils.verifyToken(loginUser);
-            // TODO 此处必须设置Http Head username参数值，具体原因不详，待研究
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword());
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
+//            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword());
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }

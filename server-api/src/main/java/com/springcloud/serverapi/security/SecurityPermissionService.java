@@ -1,7 +1,9 @@
 package com.springcloud.serverapi.security;
 
+import com.springcloud.serverapi.util.JwtUtils;
 import com.springcloud.serverapi.util.ServletUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,6 +13,9 @@ import org.springframework.stereotype.Service;
  */
 @Service("securityPermissionService")
 public class SecurityPermissionService {
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     /**
      * 验证用户是否具备某权限
@@ -22,7 +27,11 @@ public class SecurityPermissionService {
         if (StringUtils.isEmpty(permission)) {
             return false;
         }
-        if (("system:" + ServletUtils.getRequest().getHeader("username")).equalsIgnoreCase(permission)){
+        LoginUser loginUser = jwtUtils.getLoginUser(ServletUtils.getRequest());
+        if (null == loginUser) {
+            return false;
+        }
+        if (("system:" + loginUser.getUsername()).equalsIgnoreCase(permission)){
             return true;
         } else {
             return false;

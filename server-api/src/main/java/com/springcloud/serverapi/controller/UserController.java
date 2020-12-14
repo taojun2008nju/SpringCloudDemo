@@ -50,7 +50,6 @@ public class UserController {
             }
         }
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        loginUser.setPassword(password);
         return new CommonResult("0", "login success", jwtUtils.createToken(loginUser));
     }
 
@@ -63,7 +62,7 @@ public class UserController {
     @PreAuthorize("@securityPermissionService.hasPermi('system:admin')")
     @RequestMapping(value = "/testRequir")
     @ResponseBody
-    public CommonResult login(HttpServletRequest request, HttpServletResponse response) {
+    public CommonResult testRequir(HttpServletRequest request, HttpServletResponse response) {
         return new CommonResult("0", "success", null);
     }
 }
