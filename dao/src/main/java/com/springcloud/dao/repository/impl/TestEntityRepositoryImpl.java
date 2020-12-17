@@ -19,7 +19,7 @@ public class TestEntityRepositoryImpl implements ITestEntityRepository {
     private TestEntityMapper testEntityMapper;
 
     @Override
-    @Cacheable(value = "testEntity", key = "#id")
+//    @Cacheable(value = "testEntity", key = "#id")
     public TestEntity selectById(Long id) {
         return testEntityMapper.selectById(id);
     }

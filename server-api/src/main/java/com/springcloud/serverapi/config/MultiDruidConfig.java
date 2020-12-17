@@ -32,6 +32,7 @@ import org.springframework.context.annotation.Primary;
  */
 @Configuration
 public class MultiDruidConfig {
+
     @Bean
     @ConfigurationProperties("spring.datasource.druid.master")
     public DataSource masterDataSource(MultiDruidProperties druidProperties) {
