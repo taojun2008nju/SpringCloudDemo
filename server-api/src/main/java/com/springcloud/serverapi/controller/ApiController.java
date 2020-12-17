@@ -43,4 +43,13 @@ public class ApiController {
         CommonResult<TestEntity> commonResult = new CommonResult("0", "success", testEntity);
         return commonResult;
     }
+
+    @RequestMapping("/testDb2")
+    @ResponseBody
+    public CommonResult testDb2(@RequestParam(name = "id", defaultValue = "1") long id) {
+        log.info("Method:testDb id:{}", id);
+        TestEntity testEntity = apiService.selectSlaveById(id);
+        CommonResult<TestEntity> commonResult = new CommonResult("0", "success", testEntity);
+        return commonResult;
+    }
 }

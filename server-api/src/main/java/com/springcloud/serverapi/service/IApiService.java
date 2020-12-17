@@ -10,4 +10,6 @@ import com.springcloud.dao.entity.TestEntity;
 public interface IApiService {
 
     TestEntity selectById(Long id);
+
+    TestEntity selectSlaveById(Long id);
 }
