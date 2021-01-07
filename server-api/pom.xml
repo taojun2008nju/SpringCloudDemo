@@ -124,6 +124,20 @@
 			<version>3.4.0</version>
 		</dependency>
 
+		<!-- sentinel组件 -->
+		<!--<dependency>
+			<groupId>com.alibaba.csp</groupId>
+			<artifactId>sentinel-transport-simple-http</artifactId>
+			<version>1.7.1</version>
+		</dependency>-->
+
+		<!--sentinel-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+			<version>0.2.2.RELEASE</version>
+		</dependency>
+		<!--sentinel end-->
 	</dependencies>
 
 	<dependencyManagement>
