@@ -1,5 +1,6 @@
 package com.springcloud.serverapi.util;
 
+import com.alibaba.fastjson.JSONObject;
 import com.springcloud.serverapi.dto.EsPage;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,6 @@ import java.util.UUID;
 import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.codehaus.jettison.json.JSONObject;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;

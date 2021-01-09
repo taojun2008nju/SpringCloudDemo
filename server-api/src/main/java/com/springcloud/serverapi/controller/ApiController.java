@@ -1,7 +1,10 @@
 package com.springcloud.serverapi.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.springcloud.common.common.CommonResult;
 import com.springcloud.dao.entity.TestEntity;
+import com.springcloud.serverapi.sentinel.SentinelBlockHandler;
+import com.springcloud.serverapi.sentinel.SentinelFallback;
 import com.springcloud.serverapi.service.IApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,10 @@ public class ApiController {
 
     @RequestMapping(value = {"/", "/index"})
     @ResponseBody
+    @SentinelResource(value = "indexApiResource"
+        , blockHandler = "indexBlockHandler", blockHandlerClass = SentinelBlockHandler.class
+        , fallback = "indexFallback", fallbackClass = SentinelFallback.class
+        , exceptionsToIgnore = {NullPointerException.class})
     public String index() {
         return "index";
     }

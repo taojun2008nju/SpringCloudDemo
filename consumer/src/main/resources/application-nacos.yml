@@ -16,16 +16,10 @@ spring:
   application:
     name: consumer-api
 #   nacos注册中心
-#  cloud:
-#    nacos:
-#      discovery:
-#        server-addr: 127.0.0.1:8848
-
-#   eureka注册中心
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka    #设置与eureka交互的地址，查询服务和注册服务都需要依赖这个地址，默认是：http://localhost:8761/eureka
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
 
 management:
   endpoints:
