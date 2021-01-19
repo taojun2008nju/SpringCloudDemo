@@ -16,7 +16,7 @@ public class SentinelBlockHandler {
      * @param e
      * @return
      */
-    public static String indexBlockHandler(BlockException e) {
+    public String indexBlockHandler(BlockException e) {
         log.error("Method:indexBlockHandler exception:", e);
         return new String("自定义限流信息");
     }

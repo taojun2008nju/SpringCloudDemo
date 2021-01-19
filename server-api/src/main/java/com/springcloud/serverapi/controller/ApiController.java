@@ -1,6 +1,7 @@
 package com.springcloud.serverapi.controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.springcloud.common.common.CommonResult;
 import com.springcloud.dao.entity.TestEntity;
 import com.springcloud.serverapi.sentinel.SentinelBlockHandler;
@@ -29,13 +30,23 @@ public class ApiController {
     @RequestMapping(value = {"/", "/index"})
     @ResponseBody
     @SentinelResource(value = "indexApiResource"
-        , blockHandler = "indexBlockHandler", blockHandlerClass = SentinelBlockHandler.class
-        , fallback = "indexFallback", fallbackClass = SentinelFallback.class
-        , exceptionsToIgnore = {NullPointerException.class})
-    public String index() {
+        , blockHandler = "indexBlockHandler"/*, blockHandlerClass = SentinelBlockHandler.class*/
+        , fallback = "indexFallback"/*, fallbackClass = SentinelFallback.class
+        , exceptionsToIgnore = {NullPointerException.class}*/)
+    public String index() throws InterruptedException {
+        Thread.sleep(10);
         return "index";
     }
 
+    public String indexBlockHandler(BlockException e) {
+        log.error("Method:indexBlockHandler exception:", e);
+        return new String("自定义限流信息");
+    }
+
+    public String indexFallback(Throwable e){
+        log.error("Method:indexFallback exception:", e);
+        return "index fallback";
+    }
     @RequestMapping("/hello")
     @ResponseBody
     public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {

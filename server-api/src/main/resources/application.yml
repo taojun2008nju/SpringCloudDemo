@@ -118,6 +118,12 @@ spring:
       transport:
         dashboard: localhost:8080
     #eager: true
+  zipkin:
+    base-url: http://localhost:9411
+  #设置Sleuth的抽样收集概率
+  sleuth:
+    sampler:
+      probability: 1
 
 elasticsearch:
   ip: 127.0.0.1
