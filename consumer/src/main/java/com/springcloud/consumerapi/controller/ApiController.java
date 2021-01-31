@@ -47,6 +47,7 @@ public class ApiController {
 
     @GetMapping("/consumer2")
     public String test2() {
+        log.info("Method:test2 begin");
         return restTemplate.getForObject("http://server-api/api/testDb",String.class);
     }
 
