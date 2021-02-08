@@ -61,8 +61,6 @@ public class CanalClientSample {
                 continue;
             }
 
-            entry.getHeader().getTableName();
-
             RowChange rowChage = null;
             try {
                 rowChage = RowChange.parseFrom(entry.getStoreValue());
@@ -78,6 +76,8 @@ public class CanalClientSample {
                 eventType));
 
             for (RowData rowData : rowChage.getRowDatasList()) {
+                System.out.println("-------> scheduleName:" + entry.getHeader().getSchemaName() +
+                    " tableName：" + entry.getHeader().getTableName());
                 if (eventType == EventType.DELETE) {
                     printColumn(rowData.getBeforeColumnsList());
                 } else if (eventType == EventType.INSERT) {
