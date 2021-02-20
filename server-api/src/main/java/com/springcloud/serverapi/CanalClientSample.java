@@ -1,3 +1,4 @@
+/*
 package com.springcloud.serverapi;
 
 import com.alibaba.otter.canal.client.CanalConnector;
@@ -8,11 +9,13 @@ import java.net.InetSocketAddress;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 
+*/
 /**
  * @author Administrator
  * @date 2021/1/20 20:49:00
  * @description Canal客户端测试
- */
+ *//*
+
 public class CanalClientSample {
 
     public static void main(String args[]) {
@@ -98,3 +101,4 @@ public class CanalClientSample {
         }
     }
 }
+*/

@@ -1,0 +1,39 @@
+project:
+  application: SpringCloud
+  name: SpringCloud
+  chineseName: SpringCloud工程OAuth2
+  version:  1.0
+  unpackTime: 2021/02/08
+  PIC: taojun
+  versionControlNo: 1.0
+  versionControlPath:
+  framework: SpringBoot
+
+server:
+  port: 8088    #声明端口号
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/oauth2?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 123456
+  main:
+    allow-bean-definition-overriding: true
+mybatis:
+  type-aliases-package: com.springcloud.oauth2
+  configuration:
+    map-underscore-to-camel-case: true
+logging:
+  config: classpath:log/log4j2.xml
+
+
+#  spring boot 升为 2.0 后，为了安全，默认 Actuator 只暴露2个端点，heath 和 info
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

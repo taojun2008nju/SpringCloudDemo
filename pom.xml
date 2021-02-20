@@ -24,6 +24,8 @@
 		<module>consumer</module>
 		<module>common</module>
         <module>gateway</module>
+        <module>oauth2-authorization</module>
+        <module>oauth2-resource</module>
     </modules>
 
 	<properties>
